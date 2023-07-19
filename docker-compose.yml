@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  postgredb:
+    container_name: postgredb_1122
+    image: postgres:14.3-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=swiftieadmin
+      - POSTGRES_PASSWORD=swiftiepassword
+    ports:
+      - "1122:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+volumes:
+  postgres_data:
+    driver: local
