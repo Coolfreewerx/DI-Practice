@@ -4,16 +4,13 @@ import (
 	"context"
 	"di-practice/ent"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
 
 	"github.com/labstack/echo/v4"
 )
-
-type Database interface {
-	GetPosts() ([]Post, error)
-}
 
 type API interface {
 	GetPosts() ([]Post, error)
@@ -56,6 +53,7 @@ func (db *DB) GetPosts() ([]Post, error) {
 	return posts, nil
 }
 
+
 type WebAPI struct{}
 
 func (api *WebAPI) GetPosts() ([]Post, error) {
@@ -72,6 +70,34 @@ func (api *WebAPI) GetPosts() ([]Post, error) {
 	}
 
 	return posts, nil
+}
+
+type Application struct {
+	db *DB
+	web_api *WebAPI
+}
+ 
+func NewApplication(db *DB, web_api *WebAPI) *Application {
+	return &Application{
+		db:  db,
+		web_api: web_api,
+	}
+}
+
+func (app *Application) TestGetPostsHandler() string {
+	dbData, err := app.db.GetPosts()
+	posts, err := app.web_api.GetPosts()
+	// posts, err := app.db.GetPosts()
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	result := fmt.Sprintf("ข้อมูลฐานข้อมูล: %s\n\nข้อมูลจาก API:\n", dbData)
+	for _, post := range posts {
+		result += fmt.Sprintf("ID: %d\nUserID: %d\nTitle: %s\nBody: %s\n\n", post.ID, post.UserId, post.Title, post.Body)
+	}
+
+	return result
 }
 
 func GetPostsHandler(api API) echo.HandlerFunc {
