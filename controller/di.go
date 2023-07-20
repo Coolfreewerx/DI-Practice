@@ -4,13 +4,43 @@ import (
 	"context"
 	"di-practice/ent"
 	"encoding/json"
-	"fmt"
+	
 	"log"
 	"net/http"
 	"os"
 
 	"github.com/labstack/echo/v4"
 )
+
+func HandleDI() echo.HandlerFunc {
+
+	db := &DB{}
+	web := &WebAPI{}
+
+	handler :=  func(c echo.Context) error {
+
+		posts := echo.HandlerFunc(nil)
+		input := DatasourceInput{}
+
+		if err := c.Bind(&input); err != nil {
+			c.JSON(http.StatusBadRequest, "invalid JSON format")
+		}
+
+		if input.Workspace == "db" {
+			posts = GetPostsHandler(db)
+			
+		} else if input.Workspace == "web" {
+			posts = GetPostsHandler(web)
+			
+		} else {
+			return c.JSON(http.StatusBadRequest, "invalid workspace")
+		}
+
+		return posts(c)
+	}
+
+	return handler
+}
 
 func (db *DB) GetPosts() ([]Post, error) {
 
@@ -58,13 +88,8 @@ func (api *WebAPI) GetPosts() ([]Post, error) {
 
 func GetPostsHandler(api API) echo.HandlerFunc {
 
-
-	fmt.Println("enter to GetPostsHandler")
-	fmt.Println("api: ", api)
-
 	handler :=  func(c echo.Context) error {
 		posts, err := api.GetPosts()
-		fmt.Println(posts)
 		if err != nil {
 			log.Println(err)
 			return c.String(http.StatusInternalServerError, "เกิดข้อผิดพลาด")
