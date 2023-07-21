@@ -52,9 +52,9 @@ func main() {
 	
 
 	e.GET("/api/posts/test", handler.ShowAllPostHandler())
-	e.GET("/api/posts/json", _handler.ShowAllPost(web))
-	e.GET("/api/posts/db", _handler.ShowAllPost(handler))
-	e.POST("/api/posts", handler.HandlerPosts)
+	e.GET("/api/posts/json", _handler.ShowAllPost(web)) // Dependency Injection
+	e.GET("/api/posts/db", _handler.ShowAllPost(handler)) // Dependency Injection
+	e.POST("/api/posts", handler.HandlerPosts) // METHOD POST body {"type" : "DB"} or {"type" : "JSON"}
 
 
 	e.Start(":" + os.Getenv("PORT"))
