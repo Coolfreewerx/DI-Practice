@@ -4,7 +4,8 @@ import (
 	"log"
 	"os"
 
-	"di-practice/controller"
+	c "di-practice/controller"
+	s "di-practice/service"
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
@@ -13,8 +14,8 @@ import (
 
 func main() {
 
-/* 	db := &controller.DB{}
-	web := &controller.WebAPI{} */
+    db := &s.PostServiceDBImpl{}
+	// web := &s.PostServiceWebImpl{}
 
 	if err := godotenv.Load(); err != nil {
 		log.Fatal("Error loading .env file", err)
@@ -22,15 +23,10 @@ func main() {
 
 	e := echo.New()
 
-	e.POST("/check-di", controller.HandleDI())
+	// Check dependency injection from json body request.
+	e.POST("/check-posts", c.NewPostControllerWithOutService().HandleDI)
+
+	e.POST("/posts", c.NewPostController(db).GetPostsHandler)
 
 	e.Start(":" + os.Getenv("PORT"))
-
-/* 	e.GET("/reply", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, World!")
-	})
-
-	e.POST("/posts", controller.GetPostsHandler(db)) */
 }
-
-
