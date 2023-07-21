@@ -24,7 +24,7 @@ func NewPostControllerWithOutService() *PostController {
     return &PostController{}
 }
 
-func (c *PostController) HandleDI (context echo.Context) error {
+func (c *PostController) HandleDI(context echo.Context) error {
 
 	input 	:= 	m.DatasourceInput{}
 	db  	:=  &s.PostServiceDBImpl{}
