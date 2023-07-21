@@ -2,7 +2,7 @@
 
 For learn about dependency injection (DI) pattern with golang.
 
-## Installation & Usage 
+### Installation & Usage 
 1. Clone the repository:
 ```git
 git clone https://github.com/Coolfreewerx/DI.git
