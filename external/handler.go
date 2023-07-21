@@ -4,17 +4,16 @@ import (
 	mHandler "api/posts/model/handler"
 	mPosts "api/posts/model/post"
 	mService "api/posts/model/service"
+	mApi "api/posts/model/api"
 	"context"
 	"encoding/json"
+	"errors"
 	"log"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
 )
 
-type API interface {
-	GetAllPost() ([]mPosts.Post, error)
-}
 
 type WebJson struct{}
 
@@ -28,18 +27,7 @@ func NewHandler(transactionService mService.TransactionService) mHandler.Handler
 	}
 }
 
-func (h handler) ShowAllPostHandler() echo.HandlerFunc {
-	return func(c echo.Context) error {
-		posts, err := h.transactionService.ShowAllPost(context.Background())
-		if err != nil {
-			log.Fatal(err)
-			return c.String(http.StatusInternalServerError, "Error")
-		}
-
-		return c.JSON(http.StatusOK, posts)
-	}
-}
-
+// API Method Interface
 func (h handler) GetAllPost() ([]mPosts.Post, error) {
 	posts, err := h.transactionService.ShowAllPost(context.Background())
 	if err != nil {
@@ -64,17 +52,7 @@ func (web WebJson) GetAllPost() ([]mPosts.Post, error) {
 	return posts, nil
 }
 
-func ShowAllPost(api API) echo.HandlerFunc {
-	return func(c echo.Context) error {
-		posts, err := api.GetAllPost()
-		if err != nil {
-			return c.String(http.StatusInternalServerError, "Error: " + err.Error())
-		}
-		
-		return c.JSON(http.StatusOK, posts)
-	}
-}
-
+// Function for METHOD POST
 func (h handler)HandlerPosts(c echo.Context) error {
 	mode := struct{
 		Type string `json:"type"`
@@ -95,15 +73,34 @@ func (h handler)HandlerPosts(c echo.Context) error {
 	return nil
 }
 
-func ShowPosts(api API, c echo.Context) {
+// Method Dependency injection
+func ShowPosts(api mApi.API, c echo.Context) {
 	posts, err := api.GetAllPost()
 		if err != nil {
 			 c.String(http.StatusInternalServerError, "Error: " + err.Error())
 		}
 		
 		 c.JSON(http.StatusOK, posts)
-		// c.JSON(http.StatusOK, echo.Map{
-		// 	"data" : "test",
-		// 	"post" : posts[0],
-		// })
+}
+
+// Function return struce
+func (h handler) GetAPI(mode string) (mApi.API, error) {
+	if mode == "DB" {
+		return h, nil
+	} else if mode == "JSON" {
+		return &WebJson{}, nil
+	}
+	return nil, errors.New("Mode invalid")
+}
+
+// Method Dependency injection
+func (h handler) ShowAllPost(api mApi.API) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		posts, err := api.GetAllPost()
+		if err != nil {
+			return c.String(http.StatusInternalServerError, "Error: " + err.Error())
+		}
+		
+		return c.JSON(http.StatusOK, posts)
+	}
 }

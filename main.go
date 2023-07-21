@@ -1,16 +1,14 @@
 package main
 
 import (
-	// "context"
 	"log"
 	"net/http"
 	"os"
 
-	// "api/posts/ent"
 	_handler "api/posts/external"
-	"api/posts/progresql"
 	_repo "api/posts/repository"
 	_service "api/posts/service"
+	"api/posts/progresql"
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
@@ -48,14 +46,16 @@ func main() {
 		return c.String(http.StatusOK, "Hello Home")
 	})
 
-	web := _handler.WebJson{}
+	// init struct to get dataset
+	web, err := handler.GetAPI("JSON") // "DB" api for Database, "JSON" api for jsonplaceholder
+	if err != nil {
+		log.Fatal(err)
+	}
 	
+	e.GET("/api/posts", handler.ShowAllPost(web)) 			// Dependency Injection
+	// e.GET("/api/posts/db", handler.ShowAllPost(handler)) // Dependency Injection
 
-	e.GET("/api/posts/test", handler.ShowAllPostHandler())
-	e.GET("/api/posts/json", _handler.ShowAllPost(web)) // Dependency Injection
-	e.GET("/api/posts/db", _handler.ShowAllPost(handler)) // Dependency Injection
 	e.POST("/api/posts", handler.HandlerPosts) // METHOD POST body {"type" : "DB"} or {"type" : "JSON"}
-
 
 	e.Start(":" + os.Getenv("PORT"))
 }
