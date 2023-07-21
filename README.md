@@ -10,7 +10,7 @@ git clone https://github.com/Coolfreewerx/DI.git
 
 2. Install PostgreSQL and PgAdmin4 with Docker:
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 3. Run Program:
