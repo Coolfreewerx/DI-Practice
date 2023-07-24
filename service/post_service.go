@@ -18,6 +18,7 @@ type PostService interface {
 
 type PostServiceDBImpl struct {}
 
+// GetPosts from database.
 func (s *PostServiceDBImpl) GetPosts() ([]m.Post, error) {
 
 	client, err := ent.Open("postgres", os.Getenv("POSTGRES_URL"))
@@ -48,6 +49,7 @@ func (s *PostServiceDBImpl) GetPosts() ([]m.Post, error) {
 
 type PostServiceWebImpl struct {}
 
+// GetPosts from web.
 func (s *PostServiceWebImpl) GetPosts() ([]m.Post, error) {
 	resp, err := http.Get("https://jsonplaceholder.typicode.com/posts")
 	if err != nil {

@@ -24,6 +24,7 @@ func NewPostControllerWithOutService() *PostController {
     return &PostController{}
 }
 
+// HandleDI check dependency injection from json body request.
 func (c *PostController) HandleDI(context echo.Context) error {
 
 	input 	:= 	m.DatasourceInput{}
@@ -49,6 +50,7 @@ func (c *PostController) HandleDI(context echo.Context) error {
 	return nil
 }
 
+// GetPostsHandler get posts from database or web.
 func (c *PostController) GetPostsHandler(context echo.Context) error {
 	posts, err := c.postService.GetPosts()
 	if err != nil {
