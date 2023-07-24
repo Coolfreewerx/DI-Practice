@@ -1,4 +1,4 @@
-### DI-Pattern
+### DI-Practice
 
 Learn how to use dependency injection and design pattern.
 
