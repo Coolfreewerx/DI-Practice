@@ -1,8 +1,8 @@
-### DI-Practice
+# DI-Practice
 
 Learn how to use dependency injection and design pattern.
 
-### Installation & Usage 
+## How To Run 
 1. Clone the repository:
 ```git
 git clone https://github.com/Coolfreewerx/DI.git
@@ -22,11 +22,11 @@ or
 air 
 ```
 
-### API Requests and Response
+## API Requests and Response
 
 METHOD GET/POST `http://localhost:1150/posts`
 
-## Response
+### Response
 
 ```
 [
