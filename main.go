@@ -24,9 +24,9 @@ func main() {
 	e := echo.New()
 
 	// Check dependency injection from json body request.
-	e.POST("/check-posts", c.NewPostControllerWithOutService().HandleDI)
+	e.Any("/check-posts", c.NewPostControllerWithOutService().HandleDI)
 
-	e.POST("/posts", c.NewPostController(db).GetPostsHandler)
+	e.Any("/posts", c.NewPostController(db).GetPostsHandler)
 
 	e.Start(":" + os.Getenv("PORT"))
 }
