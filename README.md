@@ -1,14 +1,14 @@
-# DI
+### DI-Pattern
 
-For learn about dependency injection (DI) pattern with golang.
+Learn how to use dependency injection and design pattern.
 
-## Installation & Usage 
+### Installation & Usage 
 1. Clone the repository:
 ```git
 git clone https://github.com/Coolfreewerx/DI.git
 ```
 
-2. Install PostgreSQL and PgAdmin4 with Docker:
+2. Install PostgreSQL with Docker:
 ```bash
 docker compose up -d
 ```
@@ -21,3 +21,4 @@ or
 ```
 air 
 ```
+
