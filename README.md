@@ -24,7 +24,7 @@ air
 
 ## API Requests and Response
 
-METHOD POST `http://localhost:1150/create-post`
+- METHOD POST `http://localhost:1150/create-post`
 ```
 {
     "userId" : 1,
@@ -33,7 +33,7 @@ METHOD POST `http://localhost:1150/create-post`
 }
 ```
 
-METHOD GET `http://localhost:1150/posts`
+- METHOD GET `http://localhost:1150/posts`
 
 ### Response
 
@@ -53,6 +53,7 @@ status : `201 Created`
 
 
 - Get From Database or Jsonplaceholder.
+
 status : `200 OK`
 
 ```
