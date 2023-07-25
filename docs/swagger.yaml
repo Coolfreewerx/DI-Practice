@@ -1,18 +1,49 @@
+definitions:
+  model.Post:
+    properties:
+      body:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+      userId:
+        type: integer
+    type: object
 info:
   contact: {}
 paths:
-  /posts:
+  /check-posts:
     get:
       consumes:
       - '*/*'
-      description: get/post a posts from database or web.
+      description: get a posts from database or web.
       produces:
       - application/json
       responses:
         "200":
           description: Success response
           schema:
-            type: interface
+            items:
+              $ref: '#/definitions/model.Post'
+            type: array
+      summary: Show a posts.
+      tags:
+      - Posts
+  /posts:
+    get:
+      consumes:
+      - '*/*'
+      description: get a posts from database or web.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success response
+          schema:
+            items:
+              $ref: '#/definitions/model.Post'
+            type: array
       summary: Show a posts.
       tags:
       - Posts

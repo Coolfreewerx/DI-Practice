@@ -16,6 +16,14 @@ type PostService interface {
 	GetPosts() ([]m.Post, error)
 }
 
+type PostServiceMockImpl struct {
+	posts []m.Post
+}
+
+func NewPostServiceMockImpl() *PostServiceMockImpl {
+	return nil
+}
+
 type PostServiceDBImpl struct {}
 
 // GetPosts from database.
@@ -65,3 +73,29 @@ func (s *PostServiceWebImpl) GetPosts() ([]m.Post, error) {
 
 	return posts, nil
 }
+
+// SavePost to database.
+func (s *PostServiceDBImpl) SavePost(post *m.Post) (*m.Post, error) {
+	client, err := ent.Open("postgres", os.Getenv("POSTGRES_URL"))
+ 	if err != nil {
+ 		log.Fatalf("failed opening connection to postgres: %v", err)
+ 	}
+ 	defer client.Close()
+ 	ctx := context.Background()
+
+ 	db_post, err := client.User.Create().
+ 		SetUserId(post.UserId).
+ 		SetTitle(post.Title).
+ 		SetBody(post.Body).
+ 		Save(ctx)
+ 	if err != nil {
+ 		log.Fatalf("failed creating post: %v", err)
+ 	}
+
+ 	return &m.Post{
+ 		UserId: db_post.UserId,
+		ID: db_post.ID,
+ 		Title: db_post.Title,
+ 		Body: db_post.Body,
+ 	}, nil
+ }

@@ -11,7 +11,8 @@ import (
 )
 
 type PostController struct {
-	postService service.PostService
+	postService 	s.PostService
+	newPost 		s.PostServiceDBImpl
 }
 
 func NewPostController(postService service.PostService) *PostController {
@@ -24,7 +25,6 @@ func NewPostControllerWithOutService() *PostController {
     return &PostController{}
 }
 
-// HandleDI check dependency injection from json body request.
 func (c *PostController) HandleDI(context echo.Context) error {
 
 	input 	:= 	m.DatasourceInput{}
@@ -56,12 +56,30 @@ func (c *PostController) HandleDI(context echo.Context) error {
 // @Tags Posts
 // @Accept */*
 // @Produce json
-// @Success 200 {interface} interface{} "Success response"
+// @Success 200 {array} m.Post "Success response"
 // @Router /posts [get]
 func (c *PostController) GetPostsHandler(context echo.Context) error {
 	posts, err := c.postService.GetPosts()
 	if err != nil {
 		return context.String(http.StatusInternalServerError, "internal server error")
 	}
+	// @Success 200 {array} Post
+	// @Header 200 {string} Token "qwerty"
+	// @Failure 500 {string} string "internal server error"
 	return context.JSON(http.StatusOK, posts)
+}
+
+
+func (c *PostController) CreatePostHandler(context echo.Context) error {
+    post := new(m.Post)
+    if err := context.Bind(post); err != nil {
+        return context.String(http.StatusBadRequest, "invalid request body")
+    }
+
+    createdPost, err := c.newPost.SavePost(post)
+    if err != nil {
+        return context.String(http.StatusInternalServerError, "internal server error")
+    }
+
+    return context.JSON(http.StatusCreated, createdPost)
 }

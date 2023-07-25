@@ -44,10 +44,13 @@ func main() {
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 
 	// Check dependency injection from json body request.
-	e.Any("/check-posts", c.NewPostControllerWithOutService().HandleDI)
+	e.GET("/check-posts", c.NewPostControllerWithOutService().HandleDI)
 
 	// Change to database or web to check dependency injection.
-	e.Any("/posts", c.NewPostController(web).GetPostsHandler)
+	e.GET("/posts", c.NewPostController(web).GetPostsHandler)
+	
+	// Create post to database.
+	e.POST("/create-post", c.NewPostController(web).CreatePostHandler)
 
 	e.Start(":" + os.Getenv("PORT"))
 }

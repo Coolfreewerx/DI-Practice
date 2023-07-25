@@ -16,9 +16,9 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/posts": {
+        "/check-posts": {
             "get": {
-                "description": "get/post a posts from database or web.",
+                "description": "get a posts from database or web.",
                 "consumes": [
                     "*/*"
                 ],
@@ -33,9 +33,57 @@ const docTemplate = `{
                     "200": {
                         "description": "Success response",
                         "schema": {
-                            "type": "interface"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Post"
+                            }
                         }
                     }
+                }
+            }
+        },
+        "/posts": {
+            "get": {
+                "description": "get a posts from database or web.",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Show a posts.",
+                "responses": {
+                    "200": {
+                        "description": "Success response",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Post"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "model.Post": {
+            "type": "object",
+            "properties": {
+                "body": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "userId": {
+                    "type": "integer"
                 }
             }
         }
