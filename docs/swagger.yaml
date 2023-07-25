@@ -1,0 +1,19 @@
+info:
+  contact: {}
+paths:
+  /posts:
+    get:
+      consumes:
+      - '*/*'
+      description: get/post a posts from database or web.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: arraay
+      summary: Show a posts.
+      tags:
+      - Posts
+swagger: "2.0"

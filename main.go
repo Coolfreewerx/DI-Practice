@@ -9,9 +9,27 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
+	echoSwagger "github.com/swaggo/echo-swagger"
+
+	_ "di-practice/docs"
 	_ "github.com/lib/pq"
 )
 
+// @title Echo Swagger For DI Practice API
+// @version 1.0
+// @description This is a server for dependency injection practice.
+// @termsOfService http://swagger.io/terms/
+
+// @contact.name API Support
+// @contact.url http://www.swagger.io/support
+// @contact.email support@swagger.io
+
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host localhost:1150
+// @BasePath /
+// @schemes http
 func main() {
 
     db := &s.PostServiceDBImpl{}
@@ -22,6 +40,8 @@ func main() {
 	}
 
 	e := echo.New()
+
+	e.GET("/swagger/*", echoSwagger.WrapHandler)
 
 	// Check dependency injection from json body request.
 	e.Any("/check-posts", c.NewPostControllerWithOutService().HandleDI)

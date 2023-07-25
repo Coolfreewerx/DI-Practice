@@ -51,6 +51,13 @@ func (c *PostController) HandleDI(context echo.Context) error {
 }
 
 // GetPostsHandler get posts from database or web.
+// @Summary Show a posts.
+// @Description get/post a posts from database or web.
+// @Tags Posts
+// @Accept */*
+// @Produce json
+// @Success 200 {arraay} Post
+// @Router /posts [get]
 func (c *PostController) GetPostsHandler(context echo.Context) error {
 	posts, err := c.postService.GetPosts()
 	if err != nil {
