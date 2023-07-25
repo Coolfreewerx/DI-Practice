@@ -74,7 +74,7 @@ func (s *PostServiceWebImpl) GetPosts() ([]m.Post, error) {
 	return posts, nil
 }
 
-// Generate Dataset
+// Generate Dataset.
 func createDataSet(client *ent.Client, ctx context.Context) error {
 	if (client.User.Query().CountX(ctx) != 0) {
 		return nil
