@@ -32,8 +32,8 @@ import (
 // @schemes http
 func main() {
 
-    db := &s.PostServiceDBImpl{}
-	// web := &s.PostServiceWebImpl{}
+    // db := &s.PostServiceDBImpl{}
+	web := &s.PostServiceWebImpl{}
 
 	if err := godotenv.Load(); err != nil {
 		log.Fatal("Error loading .env file", err)
@@ -47,7 +47,7 @@ func main() {
 	e.Any("/check-posts", c.NewPostControllerWithOutService().HandleDI)
 
 	// Change to database or web to check dependency injection.
-	e.Any("/posts", c.NewPostController(db).GetPostsHandler)
+	e.Any("/posts", c.NewPostController(web).GetPostsHandler)
 
 	e.Start(":" + os.Getenv("PORT"))
 }

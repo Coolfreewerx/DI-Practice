@@ -31,9 +31,9 @@ const docTemplate = `{
                 "summary": "Show a posts.",
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "Success response",
                         "schema": {
-                            "type": "arraay"
+                            "type": "interface"
                         }
                     }
                 }
