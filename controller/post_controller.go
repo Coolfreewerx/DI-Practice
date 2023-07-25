@@ -11,7 +11,8 @@ import (
 )
 
 type PostController struct {
-	postService service.PostService
+	postService s.PostService
+	newPost     s.PostServiceDBImpl
 }
 
 func NewPostController(postService service.PostService) *PostController {
@@ -57,4 +58,19 @@ func (c *PostController) GetPostsHandler(context echo.Context) error {
 		return context.String(http.StatusInternalServerError, "internal server error")
 	}
 	return context.JSON(http.StatusOK, posts)
+}
+
+// Create a post to database.
+func (c *PostController) CreatePostHandler(context echo.Context) error {
+    post := new(m.Post)
+    if err := context.Bind(post); err != nil {
+        return context.String(http.StatusBadRequest, "invalid request body")
+    }
+
+    createdPost, err := c.newPost.SavePost(post)
+    if err != nil {
+        return context.String(http.StatusInternalServerError, "internal server error")
+    }
+
+    return context.JSON(http.StatusCreated, createdPost)
 }

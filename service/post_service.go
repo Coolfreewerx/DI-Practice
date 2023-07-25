@@ -99,3 +99,30 @@ func createDataSet(client *ent.Client, ctx context.Context) error {
 
 	return nil
 }
+
+// SavePost to database.
+func (s *PostServiceDBImpl) SavePost(post *m.Post) (*m.Post, error) {
+	client, err := ent.Open("postgres", os.Getenv("POSTGRES_URL"))
+ 	if err != nil {
+ 		log.Fatalf("failed opening connection to postgres: %v", err)
+ 	}
+ 	defer client.Close()
+ 	ctx := context.Background()
+
+ 	db_post, err := client.User.Create().
+ 		SetUserId(post.UserId).
+ 		SetTitle(post.Title).
+ 		SetBody(post.Body).
+ 		Save(ctx)
+ 	if err != nil {
+ 		log.Fatalf("failed creating post: %v", err)
+ 	}
+
+ 	return &m.Post{
+ 		UserId: db_post.UserId,
+		ID: db_post.ID,
+ 		Title: db_post.Title,
+ 		Body: db_post.Body,
+ 	}, nil
+ }
+
