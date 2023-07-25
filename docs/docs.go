@@ -16,11 +16,11 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/check-posts": {
-            "get": {
-                "description": "get a posts from database or web.",
+        "/create-post": {
+            "post": {
+                "description": "Create a post to database from json body request.",
                 "consumes": [
-                    "*/*"
+                    "application/json"
                 ],
                 "produces": [
                     "application/json"
@@ -28,15 +28,38 @@ const docTemplate = `{
                 "tags": [
                     "Posts"
                 ],
-                "summary": "Show a posts.",
+                "summary": "Create a post.",
+                "parameters": [
+                    {
+                        "description": "JSON request body for creating a new post",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Post"
+                        }
+                    }
+                ],
                 "responses": {
-                    "200": {
-                        "description": "Success response",
+                    "201": {
+                        "description": "Success operation",
                         "schema": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/model.Post"
                             }
+                        }
+                    },
+                    "400": {
+                        "description": "invalid request body",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }
@@ -44,7 +67,7 @@ const docTemplate = `{
         },
         "/posts": {
             "get": {
-                "description": "get a posts from database or web.",
+                "description": "Get a posts from database or web.",
                 "consumes": [
                     "*/*"
                 ],
@@ -57,12 +80,18 @@ const docTemplate = `{
                 "summary": "Show a posts.",
                 "responses": {
                     "200": {
-                        "description": "Success response",
+                        "description": "Success operation",
                         "schema": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/model.Post"
                             }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }

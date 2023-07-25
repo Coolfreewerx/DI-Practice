@@ -51,25 +51,35 @@ func (c *PostController) HandleDI(context echo.Context) error {
 }
 
 // GetPostsHandler get posts from database or web.
-// @Summary Show a posts.
-// @Description get a posts from database or web.
-// @Tags Posts
-// @Accept */*
-// @Produce json
-// @Success 200 {array} m.Post "Success response"
-// @Router /posts [get]
+// @Summary 	Show a posts.
+// @Description Get a posts from database or web.
+// @Tags 		Posts
+// @Accept 		*/*
+// @Produce 	json
+// @Success 	200 {array} m.Post "Success operation"
+// @Failure 	500 {string} string "Internal server error"
+// @Router 		/posts [get]
 func (c *PostController) GetPostsHandler(context echo.Context) error {
 	posts, err := c.postService.GetPosts()
 	if err != nil {
+
 		return context.String(http.StatusInternalServerError, "internal server error")
 	}
-	// @Success 200 {array} Post
-	// @Header 200 {string} Token "qwerty"
-	// @Failure 500 {string} string "internal server error"
 	return context.JSON(http.StatusOK, posts)
 }
 
 
+// CreatePostHandler create post to database from json body request.
+// @Summary 		Create a post.
+// @Description 	Create a post to database from json body request.
+// @Tags 			Posts
+// @Accept 			json
+// @Produce 		json
+// @Param body 		body m.Post true "JSON request body for creating a new post"
+// @Success 		201 {array} m.Post "Success operation"
+// @Failure 		400 {string} string "invalid request body"
+// @Failure 		500 {string} string "Internal server error"
+// @Router 			/create-post [post]
 func (c *PostController) CreatePostHandler(context echo.Context) error {
     post := new(m.Post)
     if err := context.Bind(post); err != nil {

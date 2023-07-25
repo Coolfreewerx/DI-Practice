@@ -30,10 +30,13 @@ import (
 // @host localhost:1150
 // @BasePath /
 // @schemes http
+
+//go:generate swag init -g docs\docs.go
+
 func main() {
 
-    // db := &s.PostServiceDBImpl{}
-	web := &s.PostServiceWebImpl{}
+    db := &s.PostServiceDBImpl{}
+	// web := &s.PostServiceWebImpl{}
 
 	if err := godotenv.Load(); err != nil {
 		log.Fatal("Error loading .env file", err)
@@ -47,10 +50,10 @@ func main() {
 	e.GET("/check-posts", c.NewPostControllerWithOutService().HandleDI)
 
 	// Change to database or web to check dependency injection.
-	e.GET("/posts", c.NewPostController(web).GetPostsHandler)
+	e.GET("/posts", c.NewPostController(db).GetPostsHandler)
 	
-	// Create post to database.
-	e.POST("/create-post", c.NewPostController(web).CreatePostHandler)
+	// Create post to database from json body request.
+	e.POST("/create-post", c.NewPostController(db).CreatePostHandler)
 
 	e.Start(":" + os.Getenv("PORT"))
 }
