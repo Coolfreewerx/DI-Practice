@@ -24,11 +24,37 @@ air
 
 ## API Requests and Response
 
+METHOD POST `http://localhost:1150/create-post`
+```
+{
+    "userId" : 1,
+    "title": "New Post",
+    "body": "this is first post"
+}
+```
+
 METHOD GET `http://localhost:1150/posts`
 
 ### Response
 
-- Get From Database
+- Post to create into database.
+
+status : `201 Created`
+
+```
+{
+    "userId": 1,
+    "id": 1,
+    "title": "New Post",
+    "body": "This is first post"
+}
+```
+
+
+
+- Get From Database or Jsonplaceholder.
+status : `200 OK`
+
 ```
 [
     {
@@ -45,10 +71,8 @@ METHOD GET `http://localhost:1150/posts`
     },
     ...
 ]
-
 ```
-
-- Get From Jsonplaceholder
+or 
 
 ```
 [
