@@ -22,6 +22,17 @@ or
 air 
 ```
 
+4. Call Swagger api:
+```
+curl localhost:1150/swagger/doc.json
+```
+
+5. Open SwaggerUI in browser by using URL:
+```
+http://localhost:1150/swagger/index.html
+```
+
+
 ## API Requests and Response
 
 - METHOD POST `http://localhost:1150/create-post`
