@@ -11,8 +11,8 @@ import (
 )
 
 type PostController struct {
-	postService 	s.PostService
-	newPost 		s.PostServiceDBImpl
+	postService s.PostService
+	newPost     s.PostServiceDBImpl
 }
 
 func NewPostController(postService service.PostService) *PostController {
@@ -25,6 +25,7 @@ func NewPostControllerWithOutService() *PostController {
     return &PostController{}
 }
 
+// HandleDI check dependency injection from json body request.
 func (c *PostController) HandleDI(context echo.Context) error {
 
 	input 	:= 	m.DatasourceInput{}
@@ -67,7 +68,6 @@ func (c *PostController) GetPostsHandler(context echo.Context) error {
 	}
 	return context.JSON(http.StatusOK, posts)
 }
-
 
 // CreatePostHandler create post to database from json body request.
 // @Summary 		Create a post.

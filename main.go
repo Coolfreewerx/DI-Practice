@@ -36,7 +36,7 @@ import (
 func main() {
 
     db := &s.PostServiceDBImpl{}
-	// web := &s.PostServiceWebImpl{}
+	web := &s.PostServiceWebImpl{}
 
 	if err := godotenv.Load(); err != nil {
 		log.Fatal("Error loading .env file", err)
