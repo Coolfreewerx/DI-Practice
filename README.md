@@ -3,6 +3,7 @@
 Learn how to use dependency injection and design pattern.
 
 ## How To Run 
+
 1. Clone the repository:
 ```git
 git clone https://github.com/Coolfreewerx/DI.git
@@ -31,7 +32,6 @@ curl localhost:1150/swagger/doc.json
 ```
 http://localhost:1150/swagger/index.html
 ```
-
 
 ## API Requests and Response
 
@@ -62,9 +62,6 @@ status : `201 Created`
     "body": "This is first post"
 }
 ```
-
-
-
 - Get From Database or Jsonplaceholder.
 
 status : `200 OK`
@@ -105,4 +102,3 @@ or
     ...
 ]
 ```
-

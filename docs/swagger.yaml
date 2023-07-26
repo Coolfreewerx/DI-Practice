@@ -1,0 +1,69 @@
+definitions:
+  model.Post:
+    properties:
+      body:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+      userId:
+        type: integer
+    type: object
+info:
+  contact: {}
+paths:
+  /create-post:
+    post:
+      consumes:
+      - application/json
+      description: Create a post to database from json body request.
+      parameters:
+      - description: JSON request body for creating a new post
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/model.Post'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Success operation
+          schema:
+            items:
+              $ref: '#/definitions/model.Post'
+            type: array
+        "400":
+          description: invalid request body
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Create a post.
+      tags:
+      - Posts
+  /posts:
+    get:
+      consumes:
+      - '*/*'
+      description: Get a posts from database or web.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success operation
+          schema:
+            items:
+              $ref: '#/definitions/model.Post'
+            type: array
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Show a posts.
+      tags:
+      - Posts
+swagger: "2.0"

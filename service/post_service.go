@@ -16,6 +16,14 @@ type PostService interface {
 	GetPosts() ([]m.Post, error)
 }
 
+type PostServiceMockImpl struct {
+	posts []m.Post
+}
+
+func NewPostServiceMockImpl() *PostServiceMockImpl {
+	return nil
+}
+
 type PostServiceDBImpl struct {}
 
 // GetPosts from database.
@@ -41,7 +49,6 @@ func (s *PostServiceDBImpl) GetPosts() ([]m.Post, error) {
 		log.Fatalf("failed query posts: %v", err)
 	}
 
-	
 	posts := []m.Post{}
 	for _, post := range db_posts {
 	 	posts = append(posts, m.Post{
@@ -124,5 +131,4 @@ func (s *PostServiceDBImpl) SavePost(post *m.Post) (*m.Post, error) {
  		Title: db_post.Title,
  		Body: db_post.Body,
  	}, nil
- }
-
+}
