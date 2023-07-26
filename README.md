@@ -35,6 +35,8 @@ http://localhost:1150/swagger/index.html
 
 ## API Requests and Response
 
+### Request
+
 - METHOD POST `http://localhost:1150/create-post`
 ```
 {
