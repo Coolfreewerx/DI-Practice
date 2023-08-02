@@ -16,7 +16,39 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/create-post": {
+        "/api/posts": {
+            "get": {
+                "description": "Get a posts from database or web.",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Show a posts.",
+                "responses": {
+                    "200": {
+                        "description": "Success operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Post"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/posts/create": {
             "post": {
                 "description": "Create a post to database from json body request.",
                 "consumes": [
@@ -42,7 +74,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "201": {
-                        "description": "Success operation",
+                        "description": "Post created successfully",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -54,38 +86,6 @@ const docTemplate = `{
                         "description": "invalid request body",
                         "schema": {
                             "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/posts": {
-            "get": {
-                "description": "Get a posts from database or web.",
-                "consumes": [
-                    "*/*"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Posts"
-                ],
-                "summary": "Show a posts.",
-                "responses": {
-                    "200": {
-                        "description": "Success operation",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/model.Post"
-                            }
                         }
                     },
                     "500": {
