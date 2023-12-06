@@ -16,22 +16,6 @@ type PostService interface {
 	GetPosts() ([]m.Post, error)
 }
 
-type PostServiceMockImpl struct {
-	posts []m.Post
-}
-
-func NewPostServiceMockImpl() *PostServiceMockImpl {
-	return nil
-}
-
-type PostServiceMockImpl struct {
-	posts []m.Post
-}
-
-func NewPostServiceMockImpl() *PostServiceMockImpl {
-	return nil
-}
-
 type PostServiceDBImpl struct {}
 
 // GetPosts from database.

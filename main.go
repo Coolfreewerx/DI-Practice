@@ -11,7 +11,6 @@ import (
 	"github.com/labstack/echo/v4"
 	echoSwagger "github.com/swaggo/echo-swagger"
 
-	_ "di-practice/docs"
 	_ "github.com/lib/pq"
 )
 
@@ -47,6 +46,8 @@ func main() {
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 
 	// *FOR TEST*
+
+	// *TEST In New Branch*
 
 	// Check dependency injection from json body request.
 	e.GET("/check-posts", c.NewPostControllerWithOutService().HandleDI)
