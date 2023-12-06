@@ -87,8 +87,7 @@ func createDataSet(client *ent.Client, ctx context.Context) error {
 		return nil
 	}
 
-	numOfUser := 2
-	numOfPost := 3
+	numOfUser, numOfPost := 2, 3
 
 	for u := 1 ; u <= numOfUser ; u++ {
 		for p := 1 ; p <= numOfPost ; p++ {
