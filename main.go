@@ -48,6 +48,8 @@ func main() {
 
 	// *FOR TEST*
 
+	// *TTTTTEEESSSTTTTTTT
+
 	// Check dependency injection from json body request.
 	e.GET("/check-posts", c.NewPostControllerWithOutService().HandleDI)
 
